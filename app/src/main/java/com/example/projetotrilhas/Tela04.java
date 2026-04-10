@@ -1,24 +1,33 @@
 package com.example.projetotrilhas;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class Tela04 extends AppCompatActivity {
+
+    private TextView textView5 , txtJogadas, txtPontuacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tela04);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        textView5 = findViewById(R.id.textView5);
+        txtJogadas = findViewById(R.id.textView6);
+        txtPontuacao = findViewById(R.id.textView7);
+
+        Bundle caixa = getIntent().getExtras();
+
+        if (caixa != null) {
+            String nome = caixa.getString("nome");
+            int jogadas = caixa.getInt("jogadas");
+            int pontuacao = caixa.getInt("pontuacao");
+
+            textView5.setText("Nome: " + nome);
+            txtJogadas.setText("Jogadas: " + jogadas);
+            txtPontuacao.setText("Pontuação: " + pontuacao);
+        }
     }
 }

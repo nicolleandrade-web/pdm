@@ -9,43 +9,38 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Tela03 extends AppCompatActivity implements View.OnClickListener {
-    private ImageView img1, img2, img3, img4, img5, img6, img7, img8, imgPrimeiroToque, imgSegundoToque;
+    private ImageView img1, img2, img3, img4, img5, img6,img7, img8, imgPrimeiroToque,imgSegundoToque;
     private int imagemPrimeiroToque, imagemSegundoToque, contaToque;
     private TextView texto;
     private ArrayList<Integer> lista;
-    private Button btn;
+    private Button btn, btn2;
+    private String nomeSujeito;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela03);
-
-        btn = findViewById(R.id.button3);
-        btn.setOnClickListener(this);
         btn = findViewById(R.id.button4);
         btn.setOnClickListener(this);
+        btn2 =findViewById(R.id.button3);
+        btn2.setOnClickListener(this);
 
         texto = findViewById(R.id.textView3);
         Intent i = new Intent();
         i = getIntent();
-        if (i != null) {
+        if(i != null){
             //significa que não veio corrompido
             Bundle caixa = new Bundle();
             caixa = i.getExtras();
-            if (caixa != null) {
-                //significa que a caixa não veio corrompida
-                String x = caixa.getString("nome");
-                texto.setText(x);
+            if(caixa != null){
+                //significa que a caixa não veio corrompido
+                nomeSujeito = caixa.getString("nome");
             }
         }
         img1 = findViewById(R.id.imageView2);
@@ -64,6 +59,21 @@ public class Tela03 extends AppCompatActivity implements View.OnClickListener {
         img6.setOnClickListener(this);
         img7.setOnClickListener(this);
         img8.setOnClickListener(this);
+        imgPrimeiroToque = new  ImageView(this);
+        imgSegundoToque = new ImageView(this);
+        carregaTudo();
+
+    }
+    public void carregaTudo(){
+        texto.setText(nomeSujeito);
+        img1.setBackgroundColor(Color.TRANSPARENT);
+        img2.setBackgroundColor(Color.TRANSPARENT);
+        img3.setBackgroundColor(Color.TRANSPARENT);
+        img4.setBackgroundColor(Color.TRANSPARENT);
+        img5.setBackgroundColor(Color.TRANSPARENT);
+        img6.setBackgroundColor(Color.TRANSPARENT);
+        img7.setBackgroundColor(Color.TRANSPARENT);
+        img8.setBackgroundColor(Color.TRANSPARENT);
         img1.setEnabled(false);
         img2.setEnabled(false);
         img3.setEnabled(false);
@@ -72,7 +82,6 @@ public class Tela03 extends AppCompatActivity implements View.OnClickListener {
         img6.setEnabled(false);
         img7.setEnabled(false);
         img8.setEnabled(false);
-
         lista = new ArrayList<Integer>();
         lista.add(R.drawable.ic_action_name_3);
         lista.add(R.drawable.ic_action_name_3);
@@ -82,7 +91,6 @@ public class Tela03 extends AppCompatActivity implements View.OnClickListener {
         lista.add(R.drawable.ic_action_name_5);
         lista.add(R.drawable.ic_action_name_6);
         lista.add(R.drawable.ic_action_name_6);
-
         Collections.shuffle(lista);
         img1.setImageResource(lista.get(0));
         img2.setImageResource(lista.get(1));
@@ -104,7 +112,6 @@ public class Tela03 extends AppCompatActivity implements View.OnClickListener {
                 img6.setImageResource(R.drawable.ic_action_name_2);
                 img7.setImageResource(R.drawable.ic_action_name_2);
                 img8.setImageResource(R.drawable.ic_action_name_2);
-
                 img1.setEnabled(true);
                 img2.setEnabled(true);
                 img3.setEnabled(true);
@@ -114,133 +121,132 @@ public class Tela03 extends AppCompatActivity implements View.OnClickListener {
                 img7.setEnabled(true);
                 img8.setEnabled(true);
 
-
             }
         }, 3000);
-        imgPrimeiroToque = new ImageView(this);
-        imgSegundoToque = new ImageView(this);
+
         contaToque = 0;
     }
+    public void compara(int imagem1, int imagem2){
+        contaToque=0;
 
-    public void compara(int imagem1, int imagem2) {
-        contaToque = 0;
-        if (imagem1 == imagem2) {
+        if(imagem1 == imagem2){
             imgPrimeiroToque.setEnabled(false);
             imgPrimeiroToque.setBackgroundColor(Color.GREEN);
             imgSegundoToque.setEnabled(false);
             imgSegundoToque.setBackgroundColor(Color.GREEN);
-        } else {
+        }else{
             imgPrimeiroToque.setBackgroundColor(Color.RED);
             imgSegundoToque.setBackgroundColor(Color.RED);
-
             Handler h = new Handler();
             h.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     imgPrimeiroToque.setImageResource(R.drawable.ic_action_name_2);
                     imgSegundoToque.setImageResource(R.drawable.ic_action_name_2);
-                    imgPrimeiroToque.setBackgroundColor(Color.WHITE);
-                    imgSegundoToque.setBackgroundColor(Color.WHITE);
+                    imgPrimeiroToque.setBackgroundColor(Color.TRANSPARENT);
+                    imgSegundoToque.setBackgroundColor(Color.TRANSPARENT);
                 }
             }, 2000);
         }
     }
-
-
     @Override
     public void onClick(View v) {
-        contaToque++;
+        contaToque ++;
 
-        if (v == img1) {
+        if(v == img1){
             img1.setImageResource(lista.get(0));
-            if (contaToque == 1) {
+            if(contaToque==1){
                 imgPrimeiroToque = img1;
                 imagemPrimeiroToque = lista.get(0);
-            } else {
+            }else{
                 imgSegundoToque = img1;
                 imagemSegundoToque = lista.get(0);
                 compara(imagemPrimeiroToque, imagemSegundoToque);
             }
         }
-        if (v == img2) {
+        if(v == img2){
             img2.setImageResource(lista.get(1));
-            if (contaToque == 1) {
+            if(contaToque==1){
                 imgPrimeiroToque = img2;
                 imagemPrimeiroToque = lista.get(1);
-            } else {
+            }else{
                 imgSegundoToque = img2;
                 imagemSegundoToque = lista.get(1);
                 compara(imagemPrimeiroToque, imagemSegundoToque);
             }
         }
-        if (v == img3) {
+        if(v == img3){
             img3.setImageResource(lista.get(2));
-            if (contaToque == 1) {
+            if(contaToque==1){
                 imgPrimeiroToque = img3;
                 imagemPrimeiroToque = lista.get(2);
-            } else {
+            }else{
                 imgSegundoToque = img3;
                 imagemSegundoToque = lista.get(2);
                 compara(imagemPrimeiroToque, imagemSegundoToque);
             }
         }
-        if (v == img4) {
+        if(v == img4){
             img4.setImageResource(lista.get(3));
-            if (contaToque == 1) {
+            if(contaToque==1){
                 imgPrimeiroToque = img4;
                 imagemPrimeiroToque = lista.get(3);
-            } else {
+            }else{
                 imgSegundoToque = img4;
                 imagemSegundoToque = lista.get(3);
                 compara(imagemPrimeiroToque, imagemSegundoToque);
             }
         }
-        if (v == img5) {
+        if(v == img5){
             img5.setImageResource(lista.get(4));
-            if (contaToque == 1) {
+            if(contaToque==1){
                 imgPrimeiroToque = img5;
                 imagemPrimeiroToque = lista.get(4);
-            } else {
+            }else{
                 imgSegundoToque = img5;
                 imagemSegundoToque = lista.get(4);
                 compara(imagemPrimeiroToque, imagemSegundoToque);
             }
         }
-        if (v == img6) {
+        if(v == img6){
             img6.setImageResource(lista.get(5));
-            if (contaToque == 1) {
+            if(contaToque==1){
                 imgPrimeiroToque = img6;
                 imagemPrimeiroToque = lista.get(5);
-            } else {
+            }else{
                 imgSegundoToque = img6;
                 imagemSegundoToque = lista.get(5);
                 compara(imagemPrimeiroToque, imagemSegundoToque);
             }
         }
-        if (v == img7) {
+        if(v == img7){
             img7.setImageResource(lista.get(6));
-            if (contaToque == 1) {
+            if(contaToque==1){
                 imgPrimeiroToque = img7;
                 imagemPrimeiroToque = lista.get(6);
-            } else {
+            }else{
                 imgSegundoToque = img7;
                 imagemSegundoToque = lista.get(6);
                 compara(imagemPrimeiroToque, imagemSegundoToque);
             }
         }
-        if (v == img8) {
+        if(v == img8){
             img8.setImageResource(lista.get(7));
-            if (contaToque == 1) {
+            if(contaToque==1){
                 imgPrimeiroToque = img8;
                 imagemPrimeiroToque = lista.get(7);
-            } else {
+            }else{
                 imgSegundoToque = img8;
                 imagemSegundoToque = lista.get(7);
                 compara(imagemPrimeiroToque, imagemSegundoToque);
             }
         }
-        if(v == btn) {
-            Intent i = new Intent(this, Tela03.class);
+        if(v == btn){
+            carregaTudo();
+        }
+        if (v == btn2){
+            Intent i = new Intent(this, Tela04.class);
+            startActivity(i);
         }
     }
 }
