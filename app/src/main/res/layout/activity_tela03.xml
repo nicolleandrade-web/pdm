@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#461854"
-            android:text="começar" />
+            android:text="Finalizar" />
 
         <Button
             android:id="@+id/button4"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#461854"
-            android:text="finalizar" />
+            android:text="Reiniciar" />
     </LinearLayout>
 
     <LinearLayout
